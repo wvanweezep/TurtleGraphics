@@ -1,0 +1,62 @@
+# Byte-compiled Python files
+*.py[cod]
+__pycache__/
+*.so
+
+# Distribution/packaging
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyCharm/IntelliJ IDEA IDE-specific files
+.idea/
+*.iml
+*.iws
+
+# VS Code settings (optional, in case of use with Python development)
+.vscode/
+
+# Logs and local database
+*.log
+*.sqlite3
+
+# Miscellaneous
+*.swp
+*.swo
+*.DS_Store
+*.bak
+*~
+
+# Testing
+.coverage
+.tox/
+.nox/
+.cache/
+pytest_cache/
+*.cover
+coverage.xml
+nosetests.xml
+test-results/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+.env.*
