@@ -1,7 +1,4 @@
-import turtle
-
-from window import Window
-from renderer import Renderer
+from main import Window, Renderer
 
 
 class Engine:
@@ -13,6 +10,6 @@ class Engine:
       """Update the window"""
       self.renderer.render()
 
-  def run(self):
+  def run(self) -> None:
     while self.window.active:
       self._update()
