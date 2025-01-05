@@ -1,4 +1,5 @@
-from main import Window, Renderer
+from main.window import Window
+from main.render.renderer import Renderer
 
 
 class Engine:
@@ -11,5 +12,6 @@ class Engine:
       self.renderer.render()
 
   def run(self) -> None:
+    """Keeps the engine running"""
     while self.window.active:
       self._update()
