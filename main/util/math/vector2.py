@@ -1,3 +1,6 @@
+import math
+
+
 class Vector2:
 
     def __init__(self, x, y):
@@ -37,6 +40,13 @@ class Vector2:
 
     def __repr__(self):
         return f"({self.x}, {self.y})"
+
+    def set(self, x, y) -> None:
+        self.x = x
+        self.y = y
+
+    def dist(self, dest: 'Vector2') -> float:
+        return math.sqrt(pow((self.x - dest.x), 2) + pow((self.y - dest.y), 2))
 
     def lerp(self, target, interpolation_rate: float):
         self.x = (1 - interpolation_rate) * self.x + interpolation_rate * target.x

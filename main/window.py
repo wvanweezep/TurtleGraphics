@@ -13,6 +13,7 @@ class Window:
         self.screen.title(title)
         self.screen.bgcolor("black")
         self.screen.tracer(0)
+        self.screen.listen()
 
     def _config(self, screen_size: tuple) -> None:
         """Configures the underlying tkinter window."""
@@ -25,10 +26,10 @@ class Window:
         """Protocol for closing ``turtle.Screen``, setting the active flag to ``False``"""
         self.active = False
 
-    def resize(self, screen_size: tuple) -> None:
+    def resize(self, screen_size: tuple, include_canvas: bool = True) -> None:
         self._config(screen_size)
         self.screen.setup(screen_size[0], screen_size[1])
-        self.screen.setworldcoordinates(0, 0, screen_size[0], screen_size[1])
+        if include_canvas: self.screen.setworldcoordinates(0, 0, screen_size[0], screen_size[1])
 
     def rename(self, title: str) -> None:
         self.screen.title(title)
