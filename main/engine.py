@@ -5,7 +5,7 @@ from main.render.renderer import Renderer
 class Engine:
 
     def __init__(self):
-        self.window: Window = Window("Version:1.0", (800, 600))
+        self.window: Window = Window("Version:1.0", (1800, 1000))
         self.renderer: Renderer = Renderer(self.window.screen)
 
     def _update(self) -> None:

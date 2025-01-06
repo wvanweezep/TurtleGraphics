@@ -55,7 +55,6 @@ class SpriteCreator:
         self.playing: bool = False
 
 
-
     def _initialize_keybinding(self) -> None:
         """Sets all keybinding during program runtime"""
         #Action on mouse clicks
@@ -235,16 +234,18 @@ class SpriteCreator:
         for i in range(self.size[1]//size + 1):
             self.renderer.render_connection(Vector2(size * i, 0), Vector2(size * i, self.size[1]), color=(.1, .1, .1))
 
-    def _render_union_skin_past(self, depth: int):
+    def _render_union_skin_past(self, depth: int) -> None:
         """Renders frames before the current frame at a certain depth"""
+        if len(self.points) <= 1: return
         total_frames = len(self.points)
         for i in range(depth):
             frame = self.frame - 1 - i
             if total_frames > 1: frame = frame % total_frames
             self.renderer.render_points(self.points[frame], color=(0, 0, 1/(i+1)))
 
-    def _render_union_skin_future(self, depth: int):
+    def _render_union_skin_future(self, depth: int) -> None:
         """Renders frames after the current frame at a certain depth"""
+        if len(self.points) <= 1: return
         total_frames = len(self.points)
         for i in range(depth):
             frame = self.frame + 1 + i
@@ -275,7 +276,6 @@ class SpriteCreator:
                 self.points = temp.frames
                 if not self.size: self.size = temp.size
                 if not self.fps: self.fps = temp.fps
-                print(self.points)
             print(f"Animation has been loaded from {self.file_name}.")
 
 
@@ -307,4 +307,4 @@ class SpriteCreator:
             self._update()
 
 
-SpriteCreator("Creations/enemy_walk.anim").run()
+SpriteCreator("assets/enemy/pre_attack.anim").run()
