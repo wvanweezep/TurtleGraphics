@@ -307,4 +307,4 @@ class SpriteCreator:
             self._update()
 
 
-SpriteCreator("assets/enemy/pre_attack.anim").run()
+SpriteCreator("assets/enemy/attack.anim").run()
