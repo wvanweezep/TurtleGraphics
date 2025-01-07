@@ -5,9 +5,6 @@ from main.render.renderer import Renderer
 from main.util.debug.logger import Logger
 
 
-
-
-
 class Animator(Component):
     """
     `Component` handling the animation of an Object. Animations can be queued
@@ -22,7 +19,7 @@ class Animator(Component):
         self._active_animation: tuple[str, Animation] = next(iter(self.animations.items()))
         self._queue: list[str] = []
         self.paused: bool = False
-        self._accum: int = 0
+        self._accumulator: int = 0
 
     def play_animation(self, name: str) -> None:
         """Plays an animation if present"""
@@ -51,11 +48,11 @@ class Animator(Component):
 
     def update(self) -> None:
         """Updates the accumulator for program ticks"""
-        if not self.paused: self._accum += 1
-        if self._accum >= len(self._active_animation[1].frames) * (60/self._active_animation[1].fps):
-            self._accum = 0
+        if not self.paused: self._accumulator += 1
+        if self._accumulator >= len(self._active_animation[1].frames) * (60 / self._active_animation[1].fps):
+            self._accumulator = 0
             self._check_queue()
 
     def render(self, renderer: Renderer) -> None:
         """Renders the current frame to the Canvas"""
-        renderer.render_points(self._active_animation[1].frames[self._accum//6], render_points=False)
+        renderer.render_points(self._active_animation[1].frames[self._accumulator // 6], self._object.get_transform(), self._active_animation[1].size, render_points=False)

@@ -1,14 +1,13 @@
 from main.util.math.vector2 import Vector2
 
-"""
-The Camera holds the position of the frame that is being rendered. 
-It can hold multiple targets with different weights, positioning
-accordingly to these targets and weights. The camera zoom will 
-transform all rendering points towards or away from the center.
-"""
-
 
 class Camera:
+    """
+    The Camera holds the position of the frame that is being rendered.
+    It can hold multiple targets with different weights, positioning
+    accordingly to these targets and weights. The camera zoom will
+    transform all rendering points towards or away from the center.
+    """
 
     def __init__(self):
         self.position: Vector2 = Vector2(0, 0)

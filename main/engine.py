@@ -10,20 +10,25 @@ from main.render.renderer import Renderer
 class Engine:
 
     def __init__(self):
-        self.window: Window = Window("Version:1.0", (1800, 1000))
+        self.window: Window = Window("Version:1.0", (1000, 1000))
         self.renderer: Renderer = Renderer(self.window.screen)
         self.ticker: Ticker = Ticker(60)
-        self.objects: list[Object] = [Enemy(Transform(Vector2(0, 0), Vector2(1, 1), 0))]
+        self.objects: list[Object] = [Enemy(Transform(Vector2(0, 0), Vector2(1, 1), 0)),
+                                      Enemy(Transform(Vector2(100, 0), Vector2(1, 1), 0)),
+                                      Enemy(Transform(Vector2(200, 0), Vector2(1, 1), 0)),
+                                      Enemy(Transform(Vector2(300, 0), Vector2(1, 1), 0))]
 
     def _update(self) -> None:
         """Update the window"""
-        self.renderer.pen.clear()
-        self.objects[0].render(self.renderer)
-        self.renderer.render()
+        for obj in self.objects:
+            obj.update()
 
     def _render(self) -> None:
         """Renders all objects in the window"""
-        pass
+        self.renderer.pen.clear()
+        for obj in self.objects:
+            obj.render(self.renderer)
+        self.renderer.update_screen()
 
     def run(self) -> None:
         """Keeps the engine running"""

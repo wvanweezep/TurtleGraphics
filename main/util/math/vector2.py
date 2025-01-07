@@ -53,6 +53,9 @@ class Vector2:
         self.y = (1 - interpolation_rate) * self.y + interpolation_rate * target.y
         return self
 
+    def tuple(self) -> tuple[int, int]:
+        return round(self.x), round(self.y)
+
     def copy(self):
         return Vector2(self.x, self.y)
 

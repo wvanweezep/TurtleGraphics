@@ -1,5 +1,6 @@
 import time, pickle, os
 
+from main.components.transform import Transform
 from main.render.animation import Animation
 from main.util.math.point import Point
 from main.util.math.vector2 import Vector2
@@ -31,6 +32,7 @@ A       - Lower frames per second
 D       - Higher frames per second
 """
 
+t = Transform(Vector2(0, 0), Vector2(1, 1), 0)
 
 class SpriteCreator:
 
@@ -42,7 +44,7 @@ class SpriteCreator:
         self.load_points()
 
         self.window: Window = Window("Sprite Wizard", self.size)
-        self.window.resize((1000, 1000), False)
+        self.window.resize((800, 800), False)
         self.window.screen._root.config(cursor="none")
         self.renderer: Renderer = Renderer(self.window.screen)
         self._initialize_keybinding()
@@ -230,9 +232,9 @@ class SpriteCreator:
 
     def _render_grid(self, size: int) -> None:
         for i in range(self.size[0]//size + 1):
-            self.renderer.render_connection(Vector2(0, size * i), Vector2(self.size[0], size * i), color=(.1, .1, .1))
+            self.renderer.render_connection((0, size * i), (self.size[0], size * i), color=(.1, .1, .1))
         for i in range(self.size[1]//size + 1):
-            self.renderer.render_connection(Vector2(size * i, 0), Vector2(size * i, self.size[1]), color=(.1, .1, .1))
+            self.renderer.render_connection((size * i, 0), (size * i, self.size[1]), color=(.1, .1, .1))
 
     def _render_union_skin_past(self, depth: int) -> None:
         """Renders frames before the current frame at a certain depth"""
@@ -241,7 +243,7 @@ class SpriteCreator:
         for i in range(depth):
             frame = self.frame - 1 - i
             if total_frames > 1: frame = frame % total_frames
-            self.renderer.render_points(self.points[frame], color=(0, 0, 1/(i+1)))
+            self.renderer.render_points(self.points[frame], t, self.size, color=(0, 0, 1/(i+1)))
 
     def _render_union_skin_future(self, depth: int) -> None:
         """Renders frames after the current frame at a certain depth"""
@@ -250,7 +252,7 @@ class SpriteCreator:
         for i in range(depth):
             frame = self.frame + 1 + i
             if total_frames > 1: frame = frame % total_frames
-            self.renderer.render_points(self.points[frame], color=(1/(i+1), 0, 0))
+            self.renderer.render_points(self.points[frame], t, self.size, color=(1/(i+1), 0, 0))
 
     def _render_ui(self) -> None:
         """Renders the basic UI for the application"""
@@ -285,21 +287,21 @@ class SpriteCreator:
             self.renderer.pen.clear()
             self._render_grid(50)
             self._set_frame(1)
-            self.renderer.render_points(self.points[self.frame], render_points=False)
+            self.renderer.render_points(self.points[self.frame], t, self.size, render_points=False)
             self._render_ui()
             self.renderer.write('Playing animation...', (2, self.size[1] - 61))
-            self.renderer.render()
+            self.renderer.update_screen()
             time.sleep(1/self.fps)
         else:
             self.renderer.pen.clear()
             self._render_grid(50)
             self._render_union_skin_past(1)
             self._render_union_skin_future(1)
-            self.renderer.render_points(self.points[self.frame], debug_points=self.saved_points)
-            self.renderer.render_point(self.m_pos, color='magenta')  # Cursor
+            self.renderer.render_points(self.points[self.frame], t, self.size, debug_points=self.saved_points)
+            self.renderer.render_point(self.m_pos.tuple(), color='magenta')  # Cursor
             self._render_ui()
             self.renderer.write(f'Mode: {self.mode}', (2, self.size[1] - 61))
-            self.renderer.render()
+            self.renderer.update_screen()
 
     def run(self) -> None:
         """Keeps the engine running"""
